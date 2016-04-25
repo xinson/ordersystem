@@ -18,13 +18,24 @@ service php5-fpm restart
 ```
 
 
-## 2.在根目录新建 `storage` 赋予777权限
+## 2.目录 `storage` 赋予777权限
 
 
-## 3.在根目录运行 `composer install --no-dev` 和  `composer update --no-dev` ; 当编写了新的类文件时, 需要运行 `composer dump-autoload` 来确保类能自动加载
+## 3.1 在根目录运行当
+```bash
+composer install --no-dev && composer update --no-dev
+```
+
+## 3.2 当编写了新的类文件时,确保类能自动加载.在根目录运行
+```bash
+composer dump-autoload
+```
 
 
-## 4.生产环境新建 `app/common/config/production` production目录覆盖config对应文件的配置
+## 4.生产环境新建目录,该目录文件会覆盖config对应文件的配置
+```bash
+app/common/config/production
+```
 
 
 ## 5.配置crontab计划任务(在根目录运行)
@@ -104,29 +115,19 @@ service php5-fpm restart
 
 ### 9.1 Swoole 扩展安装
 可以用 PECL 安装，或者直接从源代码编译安装，参考：[Swoole 安装手册](http://wiki.swoole.com/wiki/page/6.html)。
-```bash
-apt-get install php5-dev
-pecl install swoole
-```
+
+    apt-get install php5-dev
+    pecl install swoole
+
 安装成功后会生成 swoole.so，我们需要把它加载到 PHP 中：
 
-```bash
-vim /etc/php5/mods-available/swoole.ini
-```
-
-```ini
-extension=swoole.so
-```
-
-```bash
-ln -s /etc/php5/mods-available/swoole.ini /etc/php5/cli/conf.d/20-swoole.ini
-ln -s /etc/php5/mods-available/swoole.ini /etc/php5/fpm/conf.d/20-swoole.ini
-```
+    vim /etc/php5/mods-available/swoole.ini
+    extension=swoole.so
+    ln -s /etc/php5/mods-available/swoole.ini /etc/php5/cli/conf.d/20-swoole.ini
+    ln -s /etc/php5/mods-available/swoole.ini /etc/php5/fpm/conf.d/20-swoole.ini
 
 重启 php-fpm：
-```bash
-service php5-fpm restart
-```
+    service php5-fpm restart
 
 ### 9.2 服务模式配置service.php
           return array(
@@ -139,44 +140,38 @@ service php5-fpm restart
               'backlog' => 8192
           );
 
+
 #### 9.3 Nginx 流量转发
 参考 [4. Nginx相关：Fast CGI 参数](#4-nginx-fast-cgi)，把 `USE_SERVICE` 设为 1：
-```conf
-fastcgi_param USE_SERVICE 1;
-```
+    fastcgi_param USE_SERVICE 1;
+
 重载 Nginx 配置：
-```bash
-nginx -t
-nginx -s reload
-```
+    nginx -t
+    nginx -s reload
+
 
 ### 9.4 启用服务模式
 
 #### 9.4.1 安装 Linux 服务
 此操作需要在所有 PHP 服务器上执行。
-```bash
-cd /path/to/orderSysytem
-chmod 755 tool
-sudo php tool Service install
-```
+    cd /path/to/orderSysytem
+    chmod 755 tool
+    sudo php tool Service install
 此操作会在 /etc/init.d/ 目录下创建 order_sysytem 文件。
 
 安装完成后请确保服务会在系统启动后自动运行。
 
 若需卸载服务，则执行：
-```bash
-sudo php tool Service uninstall
-```
+    sudo php tool Service uninstall
 
 #### 9.4.2 服务操作命令
-```bash
-service order_sysytem start|reload|restart|stop|status
-```
+    service order_sysytem start|reload|restart|stop|status
 
 
 ## 10.单元测试功能(在本地开发配置,生产环境不配置) ,并且需关闭服务模式.
 
-###根目录运行 `composer update --dev` 和 `composer dump-autoload`
+###根目录运行
+    composer update --dev && composer dump-autoload
 
 ###配置应用 app/common/config/production/application.php 开启debug模式
 
