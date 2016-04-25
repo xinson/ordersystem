@@ -1,6 +1,4 @@
 ## 订单系统
-
-## pay
 本项目是新版支付系统，使用phalcon扩展框架。
 尽管Phalcon并不直接依赖其他PHP扩展，但还是使用了一部分扩展用于提供某些功能。所使用的扩展如下:
 
@@ -10,7 +8,6 @@
     PDO
     PDO/Mysql
 
-
 ## 1.1 安装phalcon扩展 ( 暂时只支持 php5.* 版本, php7 暂时未支持 )
 
     https://docs.phalconphp.com/zh/latest/reference/install.html#linux-solaris-mac (官方)
@@ -19,6 +16,7 @@
 ```bash
 service php5-fpm restart
 ```
+
 
 ## 2.在根目录新建 `storage` 赋予777权限
 
@@ -157,11 +155,11 @@ nginx -s reload
 #### 9.4.1 安装 Linux 服务
 此操作需要在所有 PHP 服务器上执行。
 ```bash
-cd /path/to/pay
+cd /path/to/orderSysytem
 chmod 755 tool
 sudo php tool Service install
 ```
-此操作会在 /etc/init.d/ 目录下创建 pay 文件。
+此操作会在 /etc/init.d/ 目录下创建 order_sysytem 文件。
 
 安装完成后请确保服务会在系统启动后自动运行。
 
@@ -172,7 +170,7 @@ sudo php tool Service uninstall
 
 #### 9.4.2 服务操作命令
 ```bash
-service pay start|reload|restart|stop|status
+service order_sysytem start|reload|restart|stop|status
 ```
 
 

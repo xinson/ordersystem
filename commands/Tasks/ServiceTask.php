@@ -29,8 +29,8 @@ class ServiceTask extends BaseTask
     protected $availablePorts = array(9510, 9511);
     protected $config;
     protected $debug = false;
-    protected $runDir = '/tmp/pay/';
-    protected $linuxServiceScript = '/etc/init.d/order_sysytem';
+    protected $runDir = '/tmp/order_system/';
+    protected $linuxServiceScript = '/etc/init.d/order_system';
     protected $delaySave;
     protected $pid;
     protected $managerPid;
@@ -206,7 +206,7 @@ class ServiceTask extends BaseTask
     {
         $this->init();
         $serviceName = basename($this->linuxServiceScript);
-        $sourceFile = APP_PATH.'/order_sysytem';
+        $sourceFile = APP_PATH.'/order_system';
         $scriptContent = strtr(file_get_contents($sourceFile), array(
             '__PHP_ARTISAN_PWD__' => APP_PATH,
             '__SERVICE_NAME__' => $serviceName,
@@ -407,7 +407,7 @@ class ServiceTask extends BaseTask
      */
     public function onStart(swoole_server $server)
     {
-        @cli_set_process_title('order_sysytem: master process/reactor threads; port=' . $this->swoolePort);
+        @cli_set_process_title('order_system: master process/reactor threads; port=' . $this->swoolePort);
         $this->pid = $server->master_pid;   //主进程的PID，通过向主进程发送SIGTERM信号可安全关闭服务器
         $this->managerPid = $server->manager_pid;   //管理进程的PID，通过向管理进程发送SIGUSR1信号可实现柔性重启
         $this->startCommandHandler();
@@ -422,12 +422,12 @@ class ServiceTask extends BaseTask
 
     public function onManagerStart(swoole_server $server)
     {
-        @cli_set_process_title('order_sysytem: manager process');
+        @cli_set_process_title('order_system: manager process');
     }
 
     public function onWorkerStart(swoole_server $server, $workerId)
     {
-        @cli_set_process_title('order_sysytem: worker process ' . $workerId);
+        @cli_set_process_title('order_system: worker process ' . $workerId);
     }
 
     /**

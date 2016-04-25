@@ -1,14 +1,14 @@
 #!/bin/bash
 # chkconfig: 2345 85 15
-# description: Pay High Performance Socket Service
+# description: order_system High Performance Socket Service
 
 ### BEGIN INIT INFO
-# Provides:          pay
+# Provides:          order_system
 # Required-Start:    $local_fs
 # Required-Stop:     $local_fs
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Pay High Performance Socket Service
+# Short-Description: order_system High Performance Socket Service
 ### END INIT INFO
 
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
