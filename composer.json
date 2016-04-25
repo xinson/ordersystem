@@ -1,0 +1,26 @@
+{
+    "name":             "Newpay",
+    "description":      "AppGame Payment system",
+    "keywords":         ["payment", "phalcon"],
+    "time":             "2016-1-18",
+    "license":          "Newpay",
+
+    "require-dev": {
+        "phalcon/incubator": "dev-master",
+        "phpunit/phpunit": "~4.5"
+    },
+
+    "require": {
+    },
+
+    "autoload": {
+        "classmap": [
+            "commands",
+            "app/api",
+            "app/common",
+            "app/coupon",
+            "app/pay",
+            "app/test"
+        ]
+    }
+}

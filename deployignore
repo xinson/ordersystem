@@ -1,0 +1,8 @@
+/deployignore
+/storage/
+/vendor/
+/tests/config/production/
+/app/common/config/production/
+/public/shop/
+/.gitignore
+/.readme.md
