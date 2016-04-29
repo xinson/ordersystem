@@ -12,11 +12,6 @@ return array(
             'class' => 'Coupon\Models\Helper',
             'method' => 'updateExpiredCoupons'
         ),
-        'update_processing_yeepay_order_status' => array(
-            'expression' => '* * * * *',
-            'class' => 'Pay\Method\Yeepay\HelperModel',
-            'method' => 'updateProcessingOrderStatus',
-        ),
         'retry_order_callback' => array(
             'expression' => '* * * * *',
             'class' => 'Pay\Models\Helper',

@@ -100,19 +100,13 @@ class BaseController extends Controller
         $signStr = md5(md5(urldecode(http_build_query($data))) . $client->getData('app_secret'));
         if ($signStr == $sign) {
             return;
-        }
-        // Deprecated sign method
-        $secret = ConfigHelper::get('passport.apiSecret');
-        $deprecatedSignStr = md5(md5(urldecode(http_build_query($data))) . $secret);
-
-        if ($deprecatedSignStr != $sign) {
-            $signStr or $signStr = $deprecatedSignStr;
+        }else{
             $this->ajaxReturn(array(
                 'error_code' => '600020',
                 'error_msg' => '参数[签名]错误！' . (ConfigHelper::get('application.debug') ? '测试模式提示：正确签名为 ' . $signStr : '')
             ), 400);
             if(ConfigHelper::get('application.debug')) {
-                LogHelper::write('CheckSign: ' .var_export($data) . ' Secret: ' . $secret . ' Sign: ' . $deprecatedSignStr,
+                LogHelper::write('CheckSign: ' .var_export($data) . ' Secret: ' . $client->getData('app_secret') . ' Sign: ' . $signStr,
                     LogHelper::INFO);
             }
         }
